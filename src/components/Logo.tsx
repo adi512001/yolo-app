@@ -22,7 +22,7 @@ const Logo = (props: LogoProps) => {
 
   return (
     <Wrapper>
-      <img src={logo} style={{ height: header ? "1.5em" : "3em" }} />
+      <img src={logo} style={{ height: header ? "1.5em" : "3em" }} alt="logo" />
       <Name style={{ color: header ? "white" : "#262626" }}>YOLO</Name>
     </Wrapper>
   );

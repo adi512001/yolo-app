@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Header from "./components/Header";
 import { styled } from "styled-components";
 import background from "./bg.jpg";
 import Logo from "./components/Logo";
+import Options from "./components/Options";
+import { List } from "@mui/material";
 
 const Wrapper = styled.div`
   position: relative;
@@ -42,8 +44,21 @@ const InnerContent = styled.div`
   align-items: center;
 `;
 
+const SearchContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Input = styled.input`
+  outline: none;
+  cursor: pointer;
+`;
+
 const App = () => {
   const [data, setData] = useState({});
+  const [searchValue, setSearchValue] = useState("");
+
+  const inputElt = useRef(null);
 
   const getData = async () => {
     const res = await fetch("http://localhost:3030/items");
@@ -57,10 +72,6 @@ const App = () => {
     getData();
   }, []);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <Wrapper>
       <Header />
@@ -68,6 +79,15 @@ const App = () => {
         <Space />
         <InnerContent>
           <Logo />
+          <SearchContainer>
+            <Input
+              ref={inputElt}
+              type="search"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+            <List>{<Options data={data} searchValue={searchValue} />}</List>
+          </SearchContainer>
         </InnerContent>
       </Content>
     </Wrapper>
