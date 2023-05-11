@@ -83,6 +83,16 @@ const OptionsList = (props: OptionsListProps) => {
     setSelectedType("");
   };
 
+  const handleIngredientClick = (itemKey: string) => {
+    const newSelectedOptions: {
+      type: string;
+      name: string;
+      price: number;
+    }[] = [...selectedOptions, { name: itemKey, type: "Ingredient", price: 0 }];
+    setSelectedOptions(newSelectedOptions);
+    setSelectedType("");
+  };
+
   const renderList = () => {
     switch (selectedType) {
       case "":
@@ -131,7 +141,7 @@ const OptionsList = (props: OptionsListProps) => {
           return (filteredIngredients as string[]).map((itemKey, index) => (
             <MenuItem
               key={itemKey + index}
-              onClick={() => handleMenuItemClick(itemKey)}
+              onClick={() => handleIngredientClick(itemKey)}
             >
               <p>{itemKey}</p>
             </MenuItem>

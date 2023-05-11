@@ -71,7 +71,7 @@ const Options = (props: OptionsProps) => {
   }, [selectedType]);
 
   useEffect(() => {
-    console.log(selectedOptions);
+    console.log("selectedOptions", selectedOptions);
   }, [selectedOptions]);
 
   return (
