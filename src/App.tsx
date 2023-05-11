@@ -7,17 +7,13 @@ import Options from "./components/Options";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {
   Box,
-  Button,
-  Chip,
   FormControl,
   IconButton,
   InputLabel,
-  List,
   OutlinedInput,
   Select,
-  SelectChangeEvent,
 } from "@mui/material";
-import { MainOptionChip, colors } from "./components/OptionsList";
+import { MainOptionChip, colors } from "./components/Options";
 
 const Wrapper = styled.div`
   position: relative;
