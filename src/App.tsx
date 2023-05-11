@@ -67,10 +67,25 @@ const SearchContainer = styled.div`
 
 const FormWrapper = styled(FormControl)`
   min-width: 38em !important;
+  .MuiInputBase-root {
+    background-color: white !important;
+    border-radius: 0 !important;
+    &.Mui-focused fieldset {
+      border: 0.5px solid #ff4377cc;
+    }
+  }
+  position: relative;
 `;
 
 const RecieptTitle = styled.span`
   padding-left: 1.5em;
+`;
+
+const CompleteButton = styled(IconButton)`
+  position: absolute !important;
+  right: 11em;
+  top: 13.1em;
+  color: #099d09 !important;
 `;
 
 const ITEM_HEIGHT = 48;
@@ -81,6 +96,8 @@ const MenuProps = {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
       width: 250,
+      borderRadius: 0,
+      marginTop: ".5em",
     },
   },
 };
@@ -186,9 +203,9 @@ const App = () => {
                 />
               </Select>
             </FormWrapper>
-            <IconButton color="secondary" onClick={handleOrderClick}>
+            <CompleteButton color="secondary" onClick={handleOrderClick}>
               <CheckCircleIcon />
-            </IconButton>
+            </CompleteButton>
           </SearchContainer>
         </InnerContent>
       </Content>
