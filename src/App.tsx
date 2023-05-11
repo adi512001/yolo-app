@@ -69,6 +69,10 @@ const FormWrapper = styled(FormControl)`
   min-width: 38em !important;
 `;
 
+const RecieptTitle = styled.span`
+  padding-left: 1.5em;
+`;
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 
@@ -168,7 +172,7 @@ const App = () => {
                       ))}
                     </Box>
                   ) : (
-                    "Reciept:"
+                    <RecieptTitle>Reciept:</RecieptTitle>
                   )
                 }
               >
@@ -182,9 +186,9 @@ const App = () => {
                 />
               </Select>
             </FormWrapper>
-            {/* <IconButton color="secondary" onClick={handleOrderClick}>
+            <IconButton color="secondary" onClick={handleOrderClick}>
               <CheckCircleIcon />
-            </IconButton> */}
+            </IconButton>
           </SearchContainer>
         </InnerContent>
       </Content>

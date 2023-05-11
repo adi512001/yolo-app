@@ -36,6 +36,11 @@ export const colors: { [key: string]: { [key: string]: string } } = {
 const Reciept = styled.div`
   display: flex;
   flex-direction: column;
+  padding-left: 2.5em;
+`;
+
+const BoldP = styled.p`
+  font-weight: bold;
 `;
 
 interface MainOptionChipProps {
@@ -188,7 +193,7 @@ const OptionsList = (props: OptionsListProps) => {
           };
           return (
             <Reciept>
-              <p>Order:</p>
+              <BoldP>Order:</BoldP>
               {selectedOptions.map((opt, index) => {
                 if (opt.type === "Menu-Item") {
                   return (
@@ -198,7 +203,7 @@ const OptionsList = (props: OptionsListProps) => {
                   );
                 }
               })}
-              <p>{`Total - ${getRecieptTotal()}NIS`}</p>
+              <BoldP>{`Total - ${getRecieptTotal()}NIS`}</BoldP>
             </Reciept>
           );
         }
