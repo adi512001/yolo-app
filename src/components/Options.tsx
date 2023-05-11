@@ -18,6 +18,7 @@ type OptionsProps = {
     type: string;
     name: string;
     price: number;
+    menuItem: string;
   }[];
   setSelectedOptions: React.Dispatch<
     React.SetStateAction<
@@ -25,6 +26,7 @@ type OptionsProps = {
         type: string;
         name: string;
         price: number;
+        menuItem: string;
       }[]
     >
   >;
@@ -78,7 +80,7 @@ const Options = (props: OptionsProps) => {
       case "Menu-Item":
         setSelectedOptions([
           ...selectedOptions,
-          { type: "Menu-Item", name: "", price: 0 },
+          { type: "Menu-Item", name: "", price: 0, menuItem: "" },
         ]);
         setSelectedType(itemKey);
         break;
@@ -90,13 +92,24 @@ const Options = (props: OptionsProps) => {
         if (allMenuItems.length > 0) {
           const lastSelectedMenuItem = allMenuItems[allMenuItems.length - 1];
           setIngredients(data["Ingredient"][lastSelectedMenuItem.name]);
+          setSelectedOptions([
+            ...selectedOptions,
+            {
+              type: "Ingredient",
+              name: "",
+              price: 0,
+              menuItem: lastSelectedMenuItem.name,
+            },
+          ]);
+        } else {
+          return;
         }
         setSelectedType(itemKey);
         break;
       case "And":
         setSelectedOptions([
           ...selectedOptions,
-          { type: "And", name: "", price: 0 },
+          { type: "And", name: "", price: 0, menuItem: "" },
         ]);
         setSelectedType("");
         break;
@@ -117,12 +130,11 @@ const Options = (props: OptionsProps) => {
   };
 
   const handleIngredientClick = (itemKey: string) => {
-    const newSelectedOptions: {
-      type: string;
-      name: string;
-      price: number;
-    }[] = [...selectedOptions, { name: itemKey, type: "Ingredient", price: 0 }];
-    setSelectedOptions(newSelectedOptions);
+    const updatedSelectedOptions = [...selectedOptions];
+    const IngredientSelected =
+      updatedSelectedOptions[updatedSelectedOptions.length - 1];
+    IngredientSelected.name = itemKey;
+    setSelectedOptions(updatedSelectedOptions);
     setSelectedType("");
   };
 
@@ -187,10 +199,10 @@ const Options = (props: OptionsProps) => {
         break;
       case "Reciept":
         if (selectedOptions.length > 0) {
+          const listItems = selectedOptions.filter(
+            (item) => item.type === "Menu-Item"
+          );
           const getRecieptTotal = () => {
-            const listItems = selectedOptions.filter(
-              (item) => item.type === "Menu-Item"
-            );
             return listItems.reduce(
               (accumulator, currentValue) => accumulator + currentValue.price,
               0
@@ -199,15 +211,20 @@ const Options = (props: OptionsProps) => {
           return (
             <Reciept>
               <BoldP>Order:</BoldP>
-              {selectedOptions.map((opt, index) => {
-                if (opt.type === "Menu-Item") {
-                  return (
-                    <p
-                      key={opt.name + index}
-                    >{`${opt.name} - ${opt.price}NIS`}</p>
-                  );
-                }
-              })}
+              {listItems.map((opt, index) => (
+                <span key={opt.name + index}>
+                  <p
+                    key={opt.name + index}
+                  >{`${opt.name} - ${opt.price}NIS`}</p>
+                  {selectedOptions
+                    .filter((option) => option.menuItem === opt.name)
+                    .map((ingredient, index) => (
+                      <p
+                        key={ingredient.name + index}
+                      >{`- ${ingredient.name}`}</p>
+                    ))}
+                </span>
+              ))}
               <BoldP>{`Total - ${getRecieptTotal()}NIS`}</BoldP>
             </Reciept>
           );

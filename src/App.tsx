@@ -106,7 +106,7 @@ const App = () => {
   });
   const [searchValue, setSearchValue] = useState("");
   const [selectedOptions, setSelectedOptions] = useState<
-    { type: string; name: string; price: number }[]
+    { type: string; name: string; price: number; menuItem: string }[]
   >([]);
   const [selectedType, setSelectedType] = useState("");
   const [listOpen, setListOpen] = useState(false);
