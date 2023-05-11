@@ -9,6 +9,7 @@ import {
   Box,
   FormControl,
   IconButton,
+  Input,
   InputLabel,
   OutlinedInput,
   Select,
@@ -51,6 +52,7 @@ const InnerContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.7em;
 `;
 
 const SearchContainer = styled.div`
@@ -66,8 +68,17 @@ const FormWrapper = styled(FormControl)`
   .MuiInputBase-root {
     background-color: white !important;
     border-radius: 0 !important;
-    &.Mui-focused fieldset {
+    height: 2.5em;
+    &.Mui-focused {
       border: 0.5px solid #ff4377cc;
+    }
+    &.MuiInput-root {
+      &:before {
+        border: none !important;
+      }
+      &:after {
+        border: none !important;
+      }
     }
   }
   position: relative;
@@ -80,7 +91,7 @@ const RecieptTitle = styled.span`
 const CompleteButton = styled(IconButton)`
   position: absolute !important;
   right: 11em;
-  top: 13.1em;
+  top: 13.3em;
   color: #099d09 !important;
 `;
 
@@ -161,7 +172,6 @@ const App = () => {
           <Logo />
           <SearchContainer>
             <FormWrapper sx={{ m: 1, width: 300 }}>
-              <InputLabel id="input-label">Order</InputLabel>
               <Select
                 labelId="input-label"
                 id="input"
@@ -170,7 +180,7 @@ const App = () => {
                 open={listOpen}
                 onClose={handleCloseList}
                 onOpen={handleOpenList}
-                input={<OutlinedInput id="select-input" label="Order" />}
+                input={<Input id="select-input" />}
                 MenuProps={MenuProps}
                 renderValue={(selected) =>
                   showSelectedOptions ? (
