@@ -18,11 +18,15 @@ import {
   Wrapper,
 } from "./AppStyles";
 
+const MENU_ITEM = "Menu-Item";
+const INGREDIENT = "Ingredient";
+const AND = "And";
+
 const App = () => {
   const [data, setData] = useState({
-    "Menu-Item": {},
-    Ingredient: {},
-    And: [],
+    [MENU_ITEM]: {},
+    [INGREDIENT]: {},
+    [AND]: [],
   });
   const [searchValue, setSearchValue] = useState("");
   const [selectedOptions, setSelectedOptions] = useState<
@@ -59,7 +63,7 @@ const App = () => {
   };
 
   const renderChipLabel = (value: SelectedOptionType) => {
-    if (value.type === "And") {
+    if (value.type === AND) {
       return "AND";
     }
     if (value.name === "") {

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { MenuItem } from "@mui/material";
 import { BoldP, MainOptionChip, Reciept, Wrapper } from "./OptionsStyles";
+const MENU_ITEM = "Menu-Item";
+const INGREDIENT = "Ingredient";
+const AND = "And";
 
 type DataType = {
-  "Menu-Item": { [key: string]: number };
-  Ingredient: { [key: string]: string[] };
-  And: string[];
+  [MENU_ITEM]: { [key: string]: number };
+  [INGREDIENT]: { [key: string]: string[] };
+  [AND]: string[];
 };
 
 export type SelectedOptionType = {
@@ -31,9 +34,9 @@ type ColorsType = {
 };
 
 export const colors: ColorsType = {
-  "Menu-Item": { color: "#1565c0", bgColor: "#1565c033" },
-  Ingredient: { color: "#7b1fa2", bgColor: "#7b1fa233" },
-  And: { color: "#df661f", bgColor: "#df661f38" },
+  [MENU_ITEM]: { color: "#1565c0", bgColor: "#1565c033" },
+  [INGREDIENT]: { color: "#7b1fa2", bgColor: "#7b1fa233" },
+  [AND]: { color: "#df661f", bgColor: "#df661f38" },
 };
 
 const Options = (props: OptionsProps) => {
@@ -50,25 +53,25 @@ const Options = (props: OptionsProps) => {
 
   const handleMainOptionClick = (itemKey: string) => {
     switch (itemKey) {
-      case "Menu-Item":
+      case MENU_ITEM:
         setSelectedOptions([
           ...selectedOptions,
-          { type: "Menu-Item", name: "", price: 0, menuItem: "" },
+          { type: MENU_ITEM, name: "", price: 0, menuItem: "" },
         ]);
         setSelectedType(itemKey);
         break;
-      case "Ingredient":
+      case INGREDIENT:
         const allMenuItems = selectedOptions.filter(
-          (opt) => opt.type === "Menu-Item"
+          (opt) => opt.type === MENU_ITEM
         );
 
         if (allMenuItems.length > 0) {
           const lastSelectedMenuItem = allMenuItems[allMenuItems.length - 1];
-          setIngredients(data["Ingredient"][lastSelectedMenuItem.name]);
+          setIngredients(data[INGREDIENT][lastSelectedMenuItem.name]);
           setSelectedOptions([
             ...selectedOptions,
             {
-              type: "Ingredient",
+              type: INGREDIENT,
               name: "",
               price: 0,
               menuItem: lastSelectedMenuItem.name,
@@ -79,10 +82,10 @@ const Options = (props: OptionsProps) => {
         }
         setSelectedType(itemKey);
         break;
-      case "And":
+      case AND:
         setSelectedOptions([
           ...selectedOptions,
-          { type: "And", name: "", price: 0, menuItem: "" },
+          { type: AND, name: "", price: 0, menuItem: "" },
         ]);
         setSelectedType("");
         break;
@@ -93,7 +96,7 @@ const Options = (props: OptionsProps) => {
 
   const handleMenuItemClick = (itemKey: string) => {
     const updatedSelectedOptions = [...selectedOptions];
-    const menuItemPrice = data["Menu-Item"][itemKey] || 0;
+    const menuItemPrice = data[MENU_ITEM][itemKey] || 0;
     const menuItemSelected =
       updatedSelectedOptions[updatedSelectedOptions.length - 1];
     menuItemSelected.name = itemKey;
@@ -122,12 +125,12 @@ const Options = (props: OptionsProps) => {
             <MainOptionChip
               type={colors[itemKey].color || ""}
               bg={colors[itemKey].bgColor || ""}
-              label={<>{itemKey === "And" ? "AND" : itemKey}</>}
+              label={<>{itemKey === AND ? "AND" : itemKey}</>}
             />
           </MenuItem>
         ));
-      case "Menu-Item":
-        const filteredMenuItems = Object.keys(data["Menu-Item"]).filter(
+      case MENU_ITEM:
+        const filteredMenuItems = Object.keys(data[MENU_ITEM]).filter(
           (itemKey) => {
             if (searchValue === "") {
               return itemKey;
@@ -149,7 +152,7 @@ const Options = (props: OptionsProps) => {
           ));
         }
         break;
-      case "Ingredient":
+      case INGREDIENT:
         const filteredIngredients = ingredients.filter((itemKey) => {
           if (searchValue === "") {
             return itemKey;
@@ -173,7 +176,7 @@ const Options = (props: OptionsProps) => {
       case "Reciept":
         if (selectedOptions.length > 0) {
           const listItems = selectedOptions.filter(
-            (item) => item.type === "Menu-Item"
+            (item) => item.type === MENU_ITEM
           );
           const getRecieptTotal = () => {
             return listItems.reduce(
