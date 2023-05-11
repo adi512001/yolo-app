@@ -1,11 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { styled } from "styled-components";
-import { Chip, MenuItem } from "@mui/material";
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+import React, { useState } from "react";
+import { MenuItem } from "@mui/material";
+import { BoldP, MainOptionChip, Reciept, Wrapper } from "./OptionsStyles";
 
 type OptionsProps = {
   data: {
@@ -39,29 +34,6 @@ export const colors: { [key: string]: { [key: string]: string } } = {
   Ingredient: { color: "#7b1fa2", bgColor: "#7b1fa233" },
   And: { color: "#df661f", bgColor: "#df661f38" },
 };
-
-const Reciept = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-left: 2.5em;
-`;
-
-const BoldP = styled.p`
-  font-weight: bold;
-`;
-
-interface MainOptionChipProps {
-  type: string;
-  bg: string;
-}
-
-export const MainOptionChip = styled(Chip)<MainOptionChipProps>`
-  color: ${(props) => props.type} !important;
-  background-color: ${(props) => props.bg} !important;
-  border-radius: 5px !important;
-  border: 1px solid ${(props) => props.type} !important;
-  cursor: pointer !important;
-`;
 
 const Options = (props: OptionsProps) => {
   const {

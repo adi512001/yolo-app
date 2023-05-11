@@ -1,113 +1,22 @@
-import React, { useEffect, useState, useRef } from "react";
-import Header from "./components/Header";
-import { styled } from "styled-components";
-import background from "./bg.jpg";
-import Logo from "./components/Logo";
-import Options from "./components/Options";
+import React, { useEffect, useState } from "react";
+import Header from "./components/Header/Header";
+import Logo from "./components/Logo/Logo";
+import Options from "./components/Options/Options";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { Box, Input, Select } from "@mui/material";
+import { colors } from "./components/Options/Options";
+import { MainOptionChip } from "./components/Options/OptionsStyles";
 import {
-  Box,
-  FormControl,
-  IconButton,
-  Input,
-  InputLabel,
-  OutlinedInput,
-  Select,
-} from "@mui/material";
-import { MainOptionChip, colors } from "./components/Options";
-
-const Wrapper = styled.div`
-  position: relative;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-
-  &:before {
-    background-image: url(${background});
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.35;
-    content: "";
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-  }
-`;
-
-const Content = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-rows: 1fr 2fr;
-`;
-
-const Space = styled.div`
-  display: block;
-`;
-
-const InnerContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.7em;
-`;
-
-const SearchContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  width: 100%;
-  justify-content: center;
-`;
-
-const FormWrapper = styled(FormControl)`
-  min-width: 38em !important;
-  .MuiInputBase-root {
-    background-color: white !important;
-    border-radius: 0 !important;
-    height: 2.5em;
-    &.Mui-focused {
-      border: 0.5px solid #ff4377cc;
-    }
-    &.MuiInput-root {
-      &:before {
-        border: none !important;
-      }
-      &:after {
-        border: none !important;
-      }
-    }
-  }
-  position: relative;
-`;
-
-const RecieptTitle = styled.span`
-  padding-left: 1.5em;
-`;
-
-const CompleteButton = styled(IconButton)`
-  position: absolute !important;
-  right: 11em;
-  top: 13.3em;
-  color: #099d09 !important;
-`;
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-      borderRadius: 0,
-      marginTop: ".5em",
-    },
-  },
-};
+  CompleteButton,
+  Content,
+  FormWrapper,
+  InnerContent,
+  MenuProps,
+  RecieptTitle,
+  SearchContainer,
+  Space,
+  Wrapper,
+} from "./AppStyles";
 
 const App = () => {
   const [data, setData] = useState({

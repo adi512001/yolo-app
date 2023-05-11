@@ -1,17 +1,6 @@
 import React from "react";
-import { styled } from "styled-components";
-import logo from "../logo.png";
-
-const Wrapper = styled.div`
-  display: flex;
-  gap: 1.6em;
-  align-items: center;
-`;
-const Name = styled.p`
-  font-family: inherit;
-  font-weight: 500;
-  letter-spacing: 0.3rem;
-`;
+import logo from "../../logo.png";
+import { Name, Wrapper } from "./LogoStyles";
 
 type LogoProps = {
   header?: boolean;
