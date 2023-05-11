@@ -77,8 +77,13 @@ const OptionsList = (props: OptionsListProps) => {
   };
 
   const handleMenuItemClick = (itemKey: string) => {
+    console.log("data", data);
     const updatedSelectedOptions = [...selectedOptions];
-    updatedSelectedOptions[updatedSelectedOptions.length - 1].name = itemKey;
+    const menuItemPrice = data["Menu-Item"][itemKey] || 0;
+    const menuItemSelected =
+      updatedSelectedOptions[updatedSelectedOptions.length - 1];
+    menuItemSelected.name = itemKey;
+    menuItemSelected.price = menuItemPrice;
     setSelectedOptions(updatedSelectedOptions);
     setSelectedType("");
   };
