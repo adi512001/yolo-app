@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./components/Header/Header";
 import Logo from "./components/Logo/Logo";
-import Options from "./components/Options/Options";
+import Options, { SelectedOptionType } from "./components/Options/Options";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Box, Input, Select } from "@mui/material";
 import { colors } from "./components/Options/Options";
@@ -58,11 +58,7 @@ const App = () => {
     handleOpenList();
   };
 
-  const renderChipLabel = (value: {
-    type: string;
-    name: string;
-    price: number;
-  }) => {
+  const renderChipLabel = (value: SelectedOptionType) => {
     if (value.type === "And") {
       return "AND";
     }

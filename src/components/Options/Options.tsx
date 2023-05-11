@@ -2,34 +2,35 @@ import React, { useState } from "react";
 import { MenuItem } from "@mui/material";
 import { BoldP, MainOptionChip, Reciept, Wrapper } from "./OptionsStyles";
 
+type DataType = {
+  "Menu-Item": { [key: string]: number };
+  Ingredient: { [key: string]: string[] };
+  And: string[];
+};
+
+export type SelectedOptionType = {
+  type: string;
+  name: string;
+  price: number;
+  menuItem: string;
+};
+
 type OptionsProps = {
-  data: {
-    "Menu-Item": { [key: string]: number };
-    Ingredient: { [key: string]: string[] };
-    And: string[];
-  };
+  data: DataType;
   searchValue: string;
-  selectedOptions: {
-    type: string;
-    name: string;
-    price: number;
-    menuItem: string;
-  }[];
+  selectedOptions: SelectedOptionType[];
   setSelectedOptions: React.Dispatch<
-    React.SetStateAction<
-      {
-        type: string;
-        name: string;
-        price: number;
-        menuItem: string;
-      }[]
-    >
+    React.SetStateAction<SelectedOptionType[]>
   >;
   selectedType: string;
   setSelectedType: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const colors: { [key: string]: { [key: string]: string } } = {
+type ColorsType = {
+  [key: string]: { [key: string]: string };
+};
+
+export const colors: ColorsType = {
   "Menu-Item": { color: "#1565c0", bgColor: "#1565c033" },
   Ingredient: { color: "#7b1fa2", bgColor: "#7b1fa233" },
   And: { color: "#df661f", bgColor: "#df661f38" },

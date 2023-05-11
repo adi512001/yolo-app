@@ -57,7 +57,8 @@ export const FormWrapper = styled(FormControl)`
   .MuiInputBase-root {
     background-color: white !important;
     border-radius: 0 !important;
-    height: 2.5em;
+    min-height: 2.5em;
+    padding-left: .7em;
     &.Mui-focused {
       border: 0.5px solid #ff4377cc;
     }
