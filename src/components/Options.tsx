@@ -14,6 +14,22 @@ type OptionsProps = {
     [key: string]: { [key: string]: number | string[] } | string[];
   };
   searchValue: string;
+  selectedOptions: {
+    type: string;
+    name: string;
+    price: number;
+  }[];
+  setSelectedOptions: React.Dispatch<
+    React.SetStateAction<
+      {
+        type: string;
+        name: string;
+        price: number;
+      }[]
+    >
+  >;
+  selectedType: string;
+  setSelectedType: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type IngredientType = {
@@ -27,17 +43,20 @@ type MenuItemType = {
 type AndType = string[];
 
 const Options = (props: OptionsProps) => {
-  const { data, searchValue } = props;
+  const {
+    data,
+    searchValue,
+    selectedOptions,
+    setSelectedOptions,
+    selectedType,
+    setSelectedType,
+  } = props;
   // const [options, setOptions] = useState<{
   //   [key: string]: IngredientType | MenuItemType | AndType;
   // }>({});
   const [options, setOptions] = useState<{
     [key: string]: any;
   }>({});
-  const [selectedOptions, setSelectedOptions] = useState<
-    { type: string; name: string; price: number }[]
-  >([]);
-  const [selectedType, setSelectedType] = useState("");
 
   useEffect(() => {
     setOptions(data);
@@ -49,7 +68,9 @@ const Options = (props: OptionsProps) => {
     }
   }, [selectedType]);
 
-  useEffect(() => {}, [selectedOptions]);
+  useEffect(() => {
+    console.log(selectedOptions);
+  }, [selectedOptions]);
 
   return (
     <Wrapper>

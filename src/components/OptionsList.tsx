@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
-import { ListItem, ListItemText } from "@mui/material";
+import { MenuItem } from "@mui/material";
 
 type OptionsListProps = {
   selectedType: string;
@@ -40,23 +40,31 @@ const OptionsList = (props: OptionsListProps) => {
   const handleMainOptionClick = (itemKey: string) => {
     switch (itemKey) {
       case "Menu-Item":
+        setSelectedOptions([
+          ...selectedOptions,
+          { type: "Menu-Item", name: "", price: 0 },
+        ]);
         setSelectedType(itemKey);
         break;
-      case "Ingredient":
-        const allMenuItems = selectedOptions.filter(
-          (opt) => opt.type === "Menu-Item"
-        );
-        if (allMenuItems.length > 1) {
-          const lastSelectedMenuItem = allMenuItems[allMenuItems.length - 1];
-          setIngredients(
-            data["Ingredient"]
-              ? data["Ingredient"][lastSelectedMenuItem.name]
-              : []
-          );
-        }
-        setSelectedType(itemKey);
-        break;
+      //   case "Ingredient":
+      //     const allMenuItems = selectedOptions.filter(
+      //       (opt) => opt.type === "Menu-Item"
+      //     );
+      //     if (allMenuItems.length > 1) {
+      //       const lastSelectedMenuItem = allMenuItems[allMenuItems.length - 1];
+      //       setIngredients(
+      //         typeof data["Ingredient"] === "object"
+      //           ? data["Ingredient"][lastSelectedMenuItem.name]
+      //           : []
+      //       );
+      //     }
+      //     setSelectedType(itemKey);
+      //     break;
       case "And":
+        setSelectedOptions([
+          ...selectedOptions,
+          { type: "And", name: "", price: 0 },
+        ]);
         setSelectedType("");
         break;
       default:
@@ -65,15 +73,9 @@ const OptionsList = (props: OptionsListProps) => {
   };
 
   const handleMenuItemClick = (itemKey: string) => {
-    setSelectedOptions([
-      ...selectedOptions,
-      {
-        type: selectedType,
-        name: itemKey,
-        // price: data["Menu-Item"] ? data["Menu-Item"][itemKey] : 0,
-        price: 0,
-      },
-    ]);
+    const updatedSelectedOptions = [...selectedOptions];
+    updatedSelectedOptions[updatedSelectedOptions.length - 1].name = itemKey;
+    setSelectedOptions(updatedSelectedOptions);
     setSelectedType("");
   };
 
@@ -81,12 +83,12 @@ const OptionsList = (props: OptionsListProps) => {
     switch (selectedType) {
       case "":
         return Object.keys(data).map((itemKey, index) => (
-          <ListItem
+          <MenuItem
             key={itemKey + index}
             onClick={() => handleMainOptionClick(itemKey)}
           >
-            <ListItemText>{itemKey}</ListItemText>
-          </ListItem>
+            <p>{itemKey}</p>
+          </MenuItem>
         ));
       case "Menu-Item":
         const filteredMenuItems = Object.keys(data["Menu-Item"]).filter(
@@ -102,12 +104,12 @@ const OptionsList = (props: OptionsListProps) => {
         );
         if (filteredMenuItems.length > 0) {
           return (filteredMenuItems as string[]).map((itemKey, index) => (
-            <ListItem
+            <MenuItem
               key={itemKey + index}
               onClick={() => handleMenuItemClick(itemKey)}
             >
-              <ListItemText>{itemKey}</ListItemText>
-            </ListItem>
+              <p>{itemKey}</p>
+            </MenuItem>
           ));
         }
         break;
@@ -123,13 +125,18 @@ const OptionsList = (props: OptionsListProps) => {
         });
         if (filteredIngredients.length > 0) {
           return (filteredIngredients as string[]).map((itemKey, index) => (
-            <ListItem
+            <MenuItem
               key={itemKey + index}
               onClick={() => handleMenuItemClick(itemKey)}
             >
-              <ListItemText>{itemKey}</ListItemText>
-            </ListItem>
+              <p>{itemKey}</p>
+            </MenuItem>
           ));
+        }
+        break;
+      case "Reciept":
+        if (selectedOptions.length > 0) {
+          return "reciept";
         }
         break;
 

@@ -4,7 +4,17 @@ import { styled } from "styled-components";
 import background from "./bg.jpg";
 import Logo from "./components/Logo";
 import Options from "./components/Options";
-import { List } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  FormControl,
+  InputLabel,
+  List,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 const Wrapper = styled.div`
   position: relative;
@@ -46,7 +56,8 @@ const InnerContent = styled.div`
 
 const SearchContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 1em;
 `;
 
 const Input = styled.input`
@@ -57,8 +68,11 @@ const Input = styled.input`
 const App = () => {
   const [data, setData] = useState({});
   const [searchValue, setSearchValue] = useState("");
-
-  const inputElt = useRef(null);
+  const [selectedOptions, setSelectedOptions] = useState<
+    { type: string; name: string; price: number }[]
+  >([]);
+  const [selectedType, setSelectedType] = useState("");
+  const [listOpen, setListOpen] = useState(false);
 
   const getData = async () => {
     const res = await fetch("http://localhost:3030/items");
@@ -72,6 +86,33 @@ const App = () => {
     getData();
   }, []);
 
+  const handleOpenList = () => {
+    setListOpen(true);
+  };
+
+  const handleCloseList = () => {
+    setListOpen(false);
+  };
+
+  const handleOrderClick = () => {
+    setSelectedType("Reciept");
+    handleOpenList();
+  };
+
+  const renderChipLabel = (value: {
+    type: string;
+    name: string;
+    price: number;
+  }) => {
+    if (value.type === "And") {
+      return "AND";
+    }
+    if (value.name === "") {
+      return value.type;
+    }
+    return `${value.type.charAt(0)} / ${value.name}`;
+  };
+
   return (
     <Wrapper>
       <Header />
@@ -80,13 +121,41 @@ const App = () => {
         <InnerContent>
           <Logo />
           <SearchContainer>
-            <Input
-              ref={inputElt}
-              type="search"
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-            />
-            <List>{<Options data={data} searchValue={searchValue} />}</List>
+            <FormControl sx={{ m: 1, width: 300 }}>
+              <InputLabel id="input-label">Order</InputLabel>
+              <Select
+                labelId="input-label"
+                id="input"
+                multiple
+                value={selectedOptions}
+                open={listOpen}
+                onClose={handleCloseList}
+                onOpen={handleOpenList}
+                input={<OutlinedInput id="select-input" label="Chip" />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    {selected.map((value, index) => (
+                      <Chip
+                        key={value.name + index}
+                        label={<>{renderChipLabel(value)}</>}
+                      />
+                    ))}
+                  </Box>
+                )}
+              >
+                <Options
+                  data={data}
+                  searchValue={searchValue}
+                  selectedOptions={selectedOptions}
+                  setSelectedOptions={setSelectedOptions}
+                  selectedType={selectedType}
+                  setSelectedType={setSelectedType}
+                />
+              </Select>
+            </FormControl>
+            <Button variant="outlined" onClick={handleOrderClick}>
+              Order
+            </Button>
           </SearchContainer>
         </InnerContent>
       </Content>
