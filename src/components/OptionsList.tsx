@@ -25,6 +25,11 @@ type OptionsListProps = {
   >;
 };
 
+const Reciept = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const OptionsList = (props: OptionsListProps) => {
   const {
     selectedType,
@@ -136,7 +141,30 @@ const OptionsList = (props: OptionsListProps) => {
         break;
       case "Reciept":
         if (selectedOptions.length > 0) {
-          return "reciept";
+          const getRecieptTotal = () => {
+            const listItems = selectedOptions.filter(
+              (item) => item.type === "Menu-Item"
+            );
+            return listItems.reduce(
+              (accumulator, currentValue) => accumulator + currentValue.price,
+              0
+            );
+          };
+          return (
+            <Reciept>
+              <p>Order:</p>
+              {selectedOptions.map((opt, index) => {
+                if (opt.type === "Menu-Item") {
+                  return (
+                    <p
+                      key={opt.name + index}
+                    >{`${opt.name} - ${opt.price}NIS`}</p>
+                  );
+                }
+              })}
+              <p>{`Total - ${getRecieptTotal()}NIS`}</p>
+            </Reciept>
+          );
         }
         break;
 

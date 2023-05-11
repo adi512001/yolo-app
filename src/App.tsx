@@ -60,11 +60,6 @@ const SearchContainer = styled.div`
   gap: 1em;
 `;
 
-const Input = styled.input`
-  outline: none;
-  cursor: pointer;
-`;
-
 const App = () => {
   const [data, setData] = useState({});
   const [searchValue, setSearchValue] = useState("");
@@ -73,6 +68,7 @@ const App = () => {
   >([]);
   const [selectedType, setSelectedType] = useState("");
   const [listOpen, setListOpen] = useState(false);
+  const [showSelectedOptions, setShowSelectedOptions] = useState(true);
 
   const getData = async () => {
     const res = await fetch("http://localhost:3030/items");
@@ -96,6 +92,7 @@ const App = () => {
 
   const handleOrderClick = () => {
     setSelectedType("Reciept");
+    setShowSelectedOptions(false);
     handleOpenList();
   };
 
@@ -132,16 +129,20 @@ const App = () => {
                 onClose={handleCloseList}
                 onOpen={handleOpenList}
                 input={<OutlinedInput id="select-input" label="Chip" />}
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value, index) => (
-                      <Chip
-                        key={value.name + index}
-                        label={<>{renderChipLabel(value)}</>}
-                      />
-                    ))}
-                  </Box>
-                )}
+                renderValue={(selected) =>
+                  showSelectedOptions ? (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value, index) => (
+                        <Chip
+                          key={value.name + index}
+                          label={<>{renderChipLabel(value)}</>}
+                        />
+                      ))}
+                    </Box>
+                  ) : (
+                    "Reciept:"
+                  )
+                }
               >
                 <Options
                   data={data}
