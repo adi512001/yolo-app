@@ -61,7 +61,11 @@ const SearchContainer = styled.div`
 `;
 
 const App = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    "Menu-Item": {},
+    Ingredient: {},
+    And: [],
+  });
   const [searchValue, setSearchValue] = useState("");
   const [selectedOptions, setSelectedOptions] = useState<
     { type: string; name: string; price: number }[]

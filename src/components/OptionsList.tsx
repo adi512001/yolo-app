@@ -5,7 +5,9 @@ import { MenuItem } from "@mui/material";
 type OptionsListProps = {
   selectedType: string;
   data: {
-    [key: string]: { [key: string]: number | string[] } | string[];
+    "Menu-Item": { [key: string]: number };
+    Ingredient: { [key: string]: string[] };
+    And: string[];
   };
   searchValue: string;
   setSelectedType: React.Dispatch<React.SetStateAction<string>>;
@@ -51,20 +53,17 @@ const OptionsList = (props: OptionsListProps) => {
         ]);
         setSelectedType(itemKey);
         break;
-      //   case "Ingredient":
-      //     const allMenuItems = selectedOptions.filter(
-      //       (opt) => opt.type === "Menu-Item"
-      //     );
-      //     if (allMenuItems.length > 1) {
-      //       const lastSelectedMenuItem = allMenuItems[allMenuItems.length - 1];
-      //       setIngredients(
-      //         typeof data["Ingredient"] === "object"
-      //           ? data["Ingredient"][lastSelectedMenuItem.name]
-      //           : []
-      //       );
-      //     }
-      //     setSelectedType(itemKey);
-      //     break;
+      case "Ingredient":
+        const allMenuItems = selectedOptions.filter(
+          (opt) => opt.type === "Menu-Item"
+        );
+
+        if (allMenuItems.length > 0) {
+          const lastSelectedMenuItem = allMenuItems[allMenuItems.length - 1];
+          setIngredients(data["Ingredient"][lastSelectedMenuItem.name]);
+        }
+        setSelectedType(itemKey);
+        break;
       case "And":
         setSelectedOptions([
           ...selectedOptions,

@@ -11,7 +11,9 @@ const Wrapper = styled.div`
 
 type OptionsProps = {
   data: {
-    [key: string]: { [key: string]: number | string[] } | string[];
+    "Menu-Item": { [key: string]: number };
+    Ingredient: { [key: string]: string[] };
+    And: string[];
   };
   searchValue: string;
   selectedOptions: {
