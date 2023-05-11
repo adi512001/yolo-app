@@ -4,17 +4,20 @@ import { styled } from "styled-components";
 import background from "./bg.jpg";
 import Logo from "./components/Logo";
 import Options from "./components/Options";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {
   Box,
   Button,
   Chip,
   FormControl,
+  IconButton,
   InputLabel,
   List,
   OutlinedInput,
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import { MainOptionChip, colors } from "./components/OptionsList";
 
 const Wrapper = styled.div`
   position: relative;
@@ -58,7 +61,25 @@ const SearchContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1em;
+  width: 100%;
+  justify-content: center;
 `;
+
+const FormWrapper = styled(FormControl)`
+  min-width: 38em !important;
+`;
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const App = () => {
   const [data, setData] = useState({
@@ -122,7 +143,7 @@ const App = () => {
         <InnerContent>
           <Logo />
           <SearchContainer>
-            <FormControl sx={{ m: 1, width: 300 }}>
+            <FormWrapper sx={{ m: 1, width: 300 }}>
               <InputLabel id="input-label">Order</InputLabel>
               <Select
                 labelId="input-label"
@@ -132,13 +153,16 @@ const App = () => {
                 open={listOpen}
                 onClose={handleCloseList}
                 onOpen={handleOpenList}
-                input={<OutlinedInput id="select-input" label="Chip" />}
+                input={<OutlinedInput id="select-input" label="Order" />}
+                MenuProps={MenuProps}
                 renderValue={(selected) =>
                   showSelectedOptions ? (
                     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                       {selected.map((value, index) => (
-                        <Chip
+                        <MainOptionChip
                           key={value.name + index}
+                          type={colors[value.type].color || ""}
+                          bg={colors[value.type].bgColor || ""}
                           label={<>{renderChipLabel(value)}</>}
                         />
                       ))}
@@ -157,10 +181,10 @@ const App = () => {
                   setSelectedType={setSelectedType}
                 />
               </Select>
-            </FormControl>
-            <Button variant="outlined" onClick={handleOrderClick}>
-              Order
-            </Button>
+            </FormWrapper>
+            {/* <IconButton color="secondary" onClick={handleOrderClick}>
+              <CheckCircleIcon />
+            </IconButton> */}
           </SearchContainer>
         </InnerContent>
       </Content>

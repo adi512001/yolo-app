@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
-import { MenuItem } from "@mui/material";
+import { Chip, MenuItem } from "@mui/material";
 
 type OptionsListProps = {
   selectedType: string;
@@ -27,9 +27,28 @@ type OptionsListProps = {
   >;
 };
 
+export const colors: { [key: string]: { [key: string]: string } } = {
+  "Menu-Item": { color: "#1565c0", bgColor: "#1565c033" },
+  Ingredient: { color: "#7b1fa2", bgColor: "#7b1fa233" },
+  And: { color: "#df661f", bgColor: "#df661f38" },
+};
+
 const Reciept = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+interface MainOptionChipProps {
+  type: string;
+  bg: string;
+}
+
+export const MainOptionChip = styled(Chip)<MainOptionChipProps>`
+  color: ${(props) => props.type} !important;
+  background-color: ${(props) => props.bg} !important;
+  border-radius: 5px !important;
+  border: 1px solid ${(props) => props.type} !important;
+  cursor: pointer !important;
 `;
 
 const OptionsList = (props: OptionsListProps) => {
@@ -77,7 +96,6 @@ const OptionsList = (props: OptionsListProps) => {
   };
 
   const handleMenuItemClick = (itemKey: string) => {
-    console.log("data", data);
     const updatedSelectedOptions = [...selectedOptions];
     const menuItemPrice = data["Menu-Item"][itemKey] || 0;
     const menuItemSelected =
@@ -106,7 +124,11 @@ const OptionsList = (props: OptionsListProps) => {
             key={itemKey + index}
             onClick={() => handleMainOptionClick(itemKey)}
           >
-            <p>{itemKey}</p>
+            <MainOptionChip
+              type={colors[itemKey].color || ""}
+              bg={colors[itemKey].bgColor || ""}
+              label={<>{itemKey === "And" ? "AND" : itemKey}</>}
+            />
           </MenuItem>
         ));
       case "Menu-Item":
