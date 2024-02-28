@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import background from "./bg.jpg";
-import {
-    FormControl,
-    IconButton,
-} from "@mui/material";
+import { FormControl, IconButton } from "@mui/material";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -58,7 +55,7 @@ export const FormWrapper = styled(FormControl)`
     background-color: white !important;
     border-radius: 0 !important;
     min-height: 2.5em;
-    padding-left: .7em;
+    padding-left: 0.7em;
     &.Mui-focused {
       border: 0.5px solid #ff4377cc;
     }
@@ -79,9 +76,6 @@ export const RecieptTitle = styled.span`
 `;
 
 export const CompleteButton = styled(IconButton)`
-  position: absolute !important;
-  right: 11em;
-  top: 13.3em;
   color: #099d09 !important;
 `;
 
